@@ -4,14 +4,26 @@ import Job from './Job';
 
 
 
-const JobsList = props => {
+class JobsList extends React.Component {
     
+     render() {
+        const { jobs, markComplete, delJob, value, updateSearch} = this.props;
+       
+        let filteredJobs = jobs.filter( job => { return job.jobTitle.toLowerCase().indexOf(value.toLowerCase()) !== -1; });
   return (
-    <>
-       {props.jobs.map( josbMap  => <Job job={josbMap} key={uuidv4()} markComplete={props.markComplete} />)}
-      
-    </>
+    <div className="job-search">  
+       <input type="text"
+        value={value}
+        onChange={updateSearch} 
+        className="form-control"
+        placeholder="Search for Job title (ex. Producer)"
+        /> 
+          
+       {filteredJobs.map( josbMap  => <Job job={josbMap} key={uuidv4()} markComplete={markComplete} delJob={delJob}/>)}
+
+    </div>
   )
+    }
 }
 
 
